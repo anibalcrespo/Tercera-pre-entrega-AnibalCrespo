@@ -1,0 +1,19 @@
+El proyecto Blog tiene una aplicacion: AppBlog
+Creada por Anibal Crespo
+-----------------------------------------------------------------------------------------------------------
+Los modelos son:
+- Blog
+- Post
+- Comments
+
+NOTA: NO ESTAN RELACIONADOS LOS MODELOS
+-----------------------------------------------------------------------------------------------------------
+Las urls "terminadas" (o que funcionan +/- como uno esperaria) son:
+http://localhost:8000/ formulario para buscar blogs.
+http://localhost:8000/buscarBlog/?data=Musiquistico (renderiza el template resultadosBusqueda.html)
+http://localhost:8000/createBlogFormulario/ formulario para crear un blog
+http://localhost:8000/createPostFormulario/ fomulario para crear un post (no asociado a ningun blog)
+http://localhost:8000/createCommentFormulario/ formulario para crear un comment (no asociado a ningun post)
+http://localhost:8000/allpost/ muestra todos los post (todos los post de todos los blogs)
+http://localhost:8000/allblog/ muestra todos los blogs (todos)
+-----------------------------------------------------------------------------------------------------------

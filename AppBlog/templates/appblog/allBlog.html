@@ -1,0 +1,49 @@
+{% extends 'appblog/base.html' %}
+{% load static %}
+
+        {% block header %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('{% static 'appblog/assets/img/post-bg.jpg' %}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="blog-heading">
+                            <h1>Listado de Todos los Blogs</h1>
+                            <h2 class="subheading"></h2>
+                            <span class="meta">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        {% endblock header %}
+
+        {% block content %}
+
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    {% for blog in blogs%}
+                    <!-- Blog preview-->
+                    <div class="blog-preview">
+                        <a href="{% url 'blog' %}"> <!-- debera llevarme al blog en cuestion-->
+                            <h2 class="blog-title">{{ blog.nombre }}</h2>
+                            <h3 class="blog-subtitle">{{ blog.descripcion }}</h3>
+                        </a>
+                        <p class="blog-meta">
+                            Publicado por
+                            <a href="#!">Autor</a>
+                            el {{ blog.fecha }}
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    {% endfor %}
+                    <!-- Pager-->
+                    <div class="d-flex justify-content-center mb-4"><a class="btn btn-primary text-uppercase m-1" href="{% url 'createBlog' %}">Crear un Blog</a></div>
+                </div>
+            </div>
+        </div>
+        {% endblock content %}

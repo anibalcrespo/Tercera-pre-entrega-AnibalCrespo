@@ -1,0 +1,78 @@
+{% extends 'appblog/base.html' %}
+{% load static %}
+
+        {% block header %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('{% static 'appblog/assets/img/post-bg.jpg' %}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="blog-heading">
+                            <h1>Nombre de blog</h1>
+                            <h2 class="subheading">Descripcion del blog</h2>
+                            <span class="meta">
+                                Creado por
+                                <a href="#!">Autor</a>
+                                fecha
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        {% endblock header %}
+
+        {% block content %}
+
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a href="{% url 'post' %}">
+                            <h2 class="post-title">Titulo Post 1</h2>
+                            <h3 class="post-subtitle">Texto Post</h3>
+                        </a>
+                        <p class="post-meta">
+                            Publicado por
+                            <a href="#!">Autor</a>
+                            el Fecha
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a href="{% url 'post' %}">
+                            <h2 class="post-title">Titulo Post 2</h2>
+                            <h3 class="post-subtitle">Texto Post</h3>
+                        </a>
+                        <p class="post-meta">
+                            Publicado por
+                            <a href="#!">Autor</a>
+                            el Fecha
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a href="{% url 'post' %}">
+                            <h2 class="post-title">Titulo Post 3</h2>
+                            <h3 class="post-subtitle">Texto Post</h3>
+                        </a>
+                        <p class="post-meta">
+                            Publicado por
+                            <a href="#!">Autor</a>
+                            el Fecha
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    <!-- Pager-->
+                    <div class="d-flex justify-content-center mb-4"><a class="btn btn-primary text-uppercase m-1" href="{% url 'createPost' %}">Crear un Post</a> <a class="btn btn-primary text-uppercase m-1" href="{% url 'allpost' %}">Todos los Post</a></div>
+                </div>
+            </div>
+        </div>
+        {% endblock content %}
