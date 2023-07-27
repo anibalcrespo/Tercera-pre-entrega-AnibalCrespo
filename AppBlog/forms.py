@@ -26,7 +26,7 @@ class CrearPostFormulario (forms.Form):
     texto = forms.CharField(
         widget = CKEditorWidget(attrs={"class": "form-control", "placeholder" : "Descripcion del Post"}))
     
-    imagen = forms.ImageField(required=False, 
+    imagen = forms.ImageField(required=False,
         widget=forms.FileInput(attrs={"class": "form-control", "placeholder": "Imagen para el Post"}))
 
     link = forms.CharField(required=False, 

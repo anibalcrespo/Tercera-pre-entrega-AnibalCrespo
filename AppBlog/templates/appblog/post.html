@@ -3,17 +3,17 @@
 
         {% block header %}
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('{% static 'appblog/assets/img/post-bg.jpg' %}')">
+        <header class="masthead" style="background-image: url('{{ blog.portada.url }}')">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="post-heading">
-                            <h1>Titulo Post</h1>
-                            <h2 class="subheading">Descripcion</h2>
+                            <h1>{{ post.titulo}}</h1>
+                            <h2 class="subheading">{{ post.descripcion }}</h2>
                             <span class="meta">
                                 Publicado por
                                 <a href="#!">Autor</a>
-                                el Fecha
+                                el {{ post.fecha }}
                             </span>
                         </div>
                     </div>
@@ -28,16 +28,30 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <p>Texto del post</p>
-                        <img class="img-fluid" src="{% static 'appblog/assets/img/post-sample-image.jpg' %}" alt="..." />
-                        <p>Link: <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a></p>
+                        <p>{{ post.texto|safe }}</p>
+                        {% if post.imagen %}
+                            <img class="img-fluid" src="{{ post.imagen.url }}" alt="..." />
+                        {% endif %}
+                        <p>Link: <a href="{{ post.link }}">{{ post.link }}</a></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <h3>Comentarios:</h3>
+                        {% for comment in comments %}
+                            <p>{{ comment.texto }}</p>
+                            <hr/>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </article>
-
+        
         <!-- La url tiene que tener el id post -->
-        <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase m-1" href="{% url 'createComment' %}">Crear un Comentario</a></div>
-                    
+        <div class="d-flex justify-content-center mb-4"><a class="btn btn-primary text-uppercase m-1" href="{% url 'createComment' post.id %}">Crear un Comentario</a></div>
+        
         {% endblock content %}
         

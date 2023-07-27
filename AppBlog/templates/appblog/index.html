@@ -33,48 +33,22 @@
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
+                    {% for blog in last_blogs %}
                     <!-- Blog preview-->
                     <div class="blogs-preview">
-                        <a href="{% url 'blog' %}">
-                            <h2 class="blogs-title">Blog 1</h2>
-                            <h3 class="blogs-subtitle">Descripcion</h3>
+                        <a href="{% url 'blog' blog.id %}">
+                            <h2 class="blogs-title">{{ blog.nombre }}</h2>
+                            <h3 class="blogs-subtitle">{{ blog.descripcion }}</h3>
                         </a>
                         <p class="blogs-meta">
                             Creado por
                             <a href="#!">Autor</a>
-                            el Fecha
+                            el {{ blog.fecha }}
                         </p>
                     </div>
                     <!-- Divider-->
                     <hr class="my-4" />
-                    <!-- Blog preview-->
-                    <div class="blogs-preview">
-                        <a href="{% url 'blog' %}">
-                            <h2 class="blogs-title">Blog 2</h2>
-                            <h3 class="blogs-subtitle">Descripcion</h3>
-                        </a>
-                        <p class="blogs-meta">
-                            Creado por
-                            <a href="#!">Autor</a>
-                            el Fecha
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    <!-- Blog preview-->
-                    <div class="blogs-preview">
-                        <a href="{% url 'blog' %}">
-                            <h2 class="blogs-title">Blog 3</h2>
-                            <h3 class="blogs-subtitle">Descripcion</h3>
-                        </a>
-                        <p class="blogs-meta">
-                            Creado por
-                            <a href="#!">Autor</a>
-                            el Fecha
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
+                    {% endfor %}
                     <!-- Pager-->
                     <div class="d-flex justify-content-center mb-4"><a class="btn btn-primary text-uppercase m-1" href="{% url 'createBlog' %}">Crear un Blog</a><a class="btn btn-primary text-uppercase m-1" href="{% url 'allblog' %}">Todos los Blogs</a></div>
                 </div>
