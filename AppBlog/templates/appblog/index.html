@@ -35,15 +35,36 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     {% for blog in last_blogs %}
                     <!-- Blog preview-->
+                    
                     <div class="blogs-preview">
                         <a href="{% url 'blog' blog.id %}">
                             <h2 class="blogs-title">{{ blog.nombre }}</h2>
                             <h3 class="blogs-subtitle">{{ blog.descripcion }}</h3>
+                            <img src="{{ blog.portada.url }}" class="img-fluid" style="width: 100%;"/>
                         </a>
                         <p class="blogs-meta">
                             Creado por
-                            <a href="#!">Autor</a>
-                            el {{ blog.fecha }}
+                            {% if blog.user.username is None %} 
+                                    Anonimo 
+                                {% else %}
+                                    <a href="#!">{{ blog.user.username }}</a>
+                                {% endif %}
+                                el {{ blog.fecha }} - <i>
+
+                                {%if blog.visibilidad == 0 %} 
+                                    (Publico)
+                                {% elif blog.visibilidad == 1 %}
+                                    (Restringido)
+                                {% else %} 
+                                    (Privado) 
+                                {% endif %}</i>
+
+                            {% if blog.user.id == user.id %}
+                                <a href="{% url 'editBlog' blog.id %}">
+                                    <i class="fa-regular fa-pen-to-square"></i> Editar
+                                </a>
+                            {% endif %}
+
                         </p>
                     </div>
                     <!-- Divider-->

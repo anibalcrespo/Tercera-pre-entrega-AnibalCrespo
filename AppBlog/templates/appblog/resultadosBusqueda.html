@@ -40,9 +40,26 @@
                             <h3 class="blog-subtitle">{{ blog.descripcion }}</h3>
                         </a>
                         <p class="blog-meta">
-                            Publicado por
-                            <a href="#!">Autor</a>
-                            el {{ blog.fecha }}
+                            Publicado por 
+                            {% if blog.user_id is None %} 
+                                Anonimo 
+                            {% else %}
+                                <a href="#!">{{ blog.user.username }}</a>
+                            {% endif %}
+                            el {{ blog.fecha }} - <i>
+
+                            {%if blog.estado == 0 %} 
+                                Inactivo 
+                            {% else %} 
+                                Activo 
+                            {% endif %}</i>
+
+                            {% if blog.user.id == user.id %}
+                                <a href="{% url 'editBlog' blog.id %}">
+                                    <i class="fa-regular fa-pen-to-square"></i> Editar
+                                </a>
+                            {% endif %}
+
                         </p>
                     </div>
                     <!-- Divider-->

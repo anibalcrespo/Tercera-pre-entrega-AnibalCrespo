@@ -1,23 +1,35 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from datetime import datetime
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Blog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     nombre = models.CharField(max_length=250)
     descripcion = models.CharField(max_length=500)
     portada = models.ImageField(upload_to='uploads/')
-    fecha = models.DateTimeField()
+    fecha = models.DateTimeField(default=datetime.now())
+    visibilidad = models.IntegerField(default=0)  # 0 - publico (usuarios no autenticados acceden)
+                                                  # 1 - restringido (usuarios autenticated acceden)
+                                                  # 2 - Privado (autenticated solo el autor) 
 
 class Post(models.Model):
-    blog_id = models.BigIntegerField(default='NULL')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, null=False)
     titulo = models.CharField(max_length=250)
     descripcion = models.CharField(max_length=500)
-    texto = RichTextField()
-    imagen = models.ImageField(default='NULL', upload_to='uploads/')
-    link = models.TextField(default='NULL')
-    fecha = models.DateTimeField()
+    texto = RichTextField(default=None)
+    imagen = models.ImageField(default=None, upload_to='uploads/')
+    link = models.TextField(default=None)
+    fecha = models.DateTimeField(default=datetime.now())
+    estado = models.IntegerField(default=1) # 0 - Inactivo
+                                            # 1 - Activo
 
 class Comment(models.Model):
-    post_id = models.BigIntegerField(default="NULL")
-    texto = models.TextField()
-    fecha = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=False)
+    texto = models.TextField(default=None)
+    fecha = models.DateTimeField(default=datetime.now())
+    estado = models.IntegerField(default=1) # 0 - Inactivo
+                                            # 1 - Activo

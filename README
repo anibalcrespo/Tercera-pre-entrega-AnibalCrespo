@@ -13,4 +13,3 @@ Aclaraciones Importantes:
 - El proyecto usa CKEditor (pip install django-ckeditor)
 - Esta completo 100% funcional (bastante para mejorar y agregar que le dara valor al producto)
 - Sube imagenes, con lo cual necesite tambien instalar pillow (python -m pip install Pillow)
-

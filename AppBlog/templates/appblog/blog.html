@@ -12,8 +12,27 @@
                             <h2 class="subheading">{{ blog.descripcion }}</h2>
                             <span class="meta">
                                 Creado por
-                                <a href="#!">Autor</a>
-                                {{ blog.fecha }}
+                                {% if blog.user.username is None %} 
+                                    Anonimo 
+                                {% else %}
+                                    <a href="#!">{{ blog.user.username }}</a>
+                                {% endif %}
+                                el {{ blog.fecha }} - <i>
+
+                                {%if blog.visibilidad == 0 %} 
+                                    (Publico)
+                                {% elif blog.visibilidad == 1 %}
+                                    (Restringido)
+                                {% else %} 
+                                    (Privado) 
+                                {% endif %}</i>
+
+                                {% if blog.user.id == user.id %}
+                                <a href="{% url 'editBlog' blog.id %}">
+                                    <i class="fa-regular fa-pen-to-square"></i> Editar
+                                </a>
+                                {% endif %}
+
                             </span>
                         </div>
                     </div>
@@ -34,11 +53,31 @@
                             <a href="{% url 'post' post.id %}">
                                 <h2 class="post-title">{{ post.titulo}}</h2>
                                 <h3 class="post-subtitle">{{ post.descripcion }}</h3>
+                                {% if post.imagen %}
+                                    <img src="{{ post.imagen.url }}" class="img-fluid" style="width: 100%;"/>
+                                {% endif %}
                             </a>
                             <p class="post-meta">
                                 Publicado por
-                                <a href="#!">Autor</a>
-                                el {{ post.fecha }}
+                                {% if post.user.username is None %} 
+                                    Anonimo 
+                                {% else %}
+                                    <a href="#!">{{ post.user.username }}</a>
+                                {% endif %}
+                                el {{ blog.fecha }} - <i>
+
+                                {%if blog.estado == 0 %} 
+                                    (Inactivo) 
+                                {% else %} 
+                                    (Activo) 
+                                {% endif %}</i>
+                                
+                                {% if post.blog.user.id == user.id %}
+                                <a href="{% url 'editPost' post.id %}">
+                                    <i class="fa-regular fa-pen-to-square"></i> Editar
+                                </a>
+                                {% endif %}
+
                             </p>
                         </div>
                         <!-- Divider-->

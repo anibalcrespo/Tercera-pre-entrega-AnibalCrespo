@@ -8,12 +8,29 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="post-heading">
-                            <h1>{{ post.titulo}}</h1>
+                            <h1>{{ post.titulo }}</h1>
                             <h2 class="subheading">{{ post.descripcion }}</h2>
                             <span class="meta">
-                                Publicado por
-                                <a href="#!">Autor</a>
-                                el {{ post.fecha }}
+                                Publicado por 
+                                {%if post.user.username is None %} 
+                                    Anonimo 
+                                {% else %}
+                                    <a href="#!">{{ post.user.username }}</a>
+                                {% endif %}
+                                el {{ post.fecha }}  - <i> 
+                                
+                                {%if post.estado == 0 %} 
+                                    (Inactivo) 
+                                {% else %} 
+                                    (Activo) 
+                                {% endif %}</i>
+
+                                {% if post.blog.user.id == user.id %}
+                                <a href="{% url 'editPost' post.id %}">
+                                    <i class="fa-regular fa-pen-to-square"></i> Editar
+                                </a>
+                                {% endif %}
+
                             </span>
                         </div>
                     </div>
@@ -30,7 +47,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <p>{{ post.texto|safe }}</p>
                         {% if post.imagen %}
-                            <img class="img-fluid" src="{{ post.imagen.url }}" alt="..." />
+                            <img class="img-fluid" style="width: 100%;" src="{{ post.imagen.url }}" alt="..." />
                         {% endif %}
                         <p>Link: <a href="{{ post.link }}">{{ post.link }}</a></p>
                     </div>
@@ -43,6 +60,29 @@
                         <h3>Comentarios:</h3>
                         {% for comment in comments %}
                             <p>{{ comment.texto }}</p>
+                            
+                            <span class="meta">
+                                Publicado por
+                                {% if comment.user.username is None %} 
+                                    Anonimo
+                                {% else %}
+                                    <a href="#!">{{ comment.user.username }}</a>
+                                {% endif %}
+                                el {{ comment.fecha }} - <i>
+                                {% if comment.estado == 0 %} 
+                                    (Inactivo) 
+                                {% else %} 
+                                    (Activo)
+                                {% endif %}</i>
+
+                            </span>
+
+                            {% if comment.post.blog.user.id == user.id %}
+                                <a href="{% url 'editComment' comment.id %}">
+                                    <i class="fa-regular fa-pen-to-square"></i> Editar
+                                </a>
+                            {% endif %}
+
                             <hr/>
                         {% endfor %}
                     </div>

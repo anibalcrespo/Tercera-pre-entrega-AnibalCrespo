@@ -1,6 +1,8 @@
 from django.urls import path, include
 from .views import *
 
+from django.contrib.auth.views import LogoutView
+
 urlpatterns = [
     path('', index, name="index"), #index muestra ultimos blogs
     path('contact/', contact, name="contact"),
@@ -13,7 +15,14 @@ urlpatterns = [
     path('createBlogFormulario/', createBlogFormulario, name="createBlog"), # fomulario para crear un blog
     path('createPostFormulario/<blog_id>/', createPostFormulario, name="createPost"), # fomulario para crear un post  
     path('createCommentFormulario/<post_id>/', createCommentFormulario, name="createComment"), # fomulario para crear un comentario
+    path('EditarPostFormulario/<post_id>/', editarPostFormulario, name="editPost"), # fomulario para editar un post
+    path('EditarBlogFormulario/<blog_id>/', editarBlogFormulario, name="editBlog"), # fomulario para editar un blog
+    path('EditarCommentFormulario/<comment_id>/', editarCommentFormulario, name="editComment"), # fomulario para editar un Commentario
 
     path('buscarBlog/', buscarBlog, name="buscarBlog"), # fomulario para buscar blogs
+    
+    path('login/', login_request, name="login"),
+    path('logout/', LogoutView.as_view(), name="logout"),
+    path('register/', register, name="register"),
         
 ]

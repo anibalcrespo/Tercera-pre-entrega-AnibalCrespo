@@ -8,7 +8,7 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="blog-heading">
-                            <h1>{{ blog.nombre }}</h1>
+                            <h1>Todos los Post Disponibles para Usted</h1>
                             <h2 class="subheading"></h2>
                             <span class="meta">
                             </span>
@@ -31,11 +31,31 @@
                         <a href="{% url 'post' post.id %}"> <!-- debera llevarme al Post en cuestion-->
                             <h2 class="post-title">{{ post.titulo }}</h2>
                             <h3 class="post-subtitle">{{ post.descripcion }}</h3>
+                            {% if post.imagen %}
+                                <img src="{{ post.imagen.url }}" class="img-fluid" style="width: 100%;"/>
+                            {% endif %}
                         </a>
                         <p class="post-meta">
                             Publicado por
-                            <a href="#!">Autor</a>
-                            el {{ post.fecha }}
+                            {% if post.user.username is None %} 
+                                    Anonimo 
+                                {% else %}
+                                    <a href="#!">{{ post.user.username }}</a>
+                                {% endif %}
+                                el {{ post.fecha }}  - <i> 
+                                
+                                {%if post.estado == 0 %} 
+                                    (Inactivo) 
+                                {% else %} 
+                                    (Activo) 
+                                {% endif %}</i>
+         
+                            {% if post.blog.user.id == user.id %}
+                                <a href="{% url 'editPost' post.id %}">
+                                    <i class="fa-regular fa-pen-to-square"></i> Editar
+                                </a>
+                            {% endif %}
+
                         </p>
                     </div>
                     <!-- Divider-->
