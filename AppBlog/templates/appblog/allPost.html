@@ -53,6 +53,9 @@
                             {% if post.blog.user.id == user.id %}
                                 <a href="{% url 'editPost' post.id %}">
                                     <i class="fa-regular fa-pen-to-square"></i> Editar
+                                </a>| 
+                                <a href="{% url 'deletePost' post.id %}">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
                                 </a>
                             {% endif %}
 

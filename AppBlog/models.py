@@ -33,3 +33,10 @@ class Comment(models.Model):
     fecha = models.DateTimeField(default=datetime.now())
     estado = models.IntegerField(default=1) # 0 - Inactivo
                                             # 1 - Activo
+
+class Avatar(models.Model):
+    imagen = models.ImageField(upload_to="avatares")
+    user = models.ForeignKey(User, on_delete= models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user} [{self.imagen}]"

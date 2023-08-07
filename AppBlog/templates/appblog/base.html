@@ -31,6 +31,14 @@
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'about' %}">Yo</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'contact' %}">Contacto</a></li>
                         {% if user.is_authenticated  %}
+                            <li class="nav-item">
+                                <a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'editar_perfil' %}">
+                                    {% if request.session.avatar %}
+                                        <img class="avatar" src="{{ request.session.avatar }}"/>
+                                    {% endif %}
+                                    Editar Perfil
+                                </a>
+                            </li>
                             <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'logout' %}">Salir</a></li>
                         {% else %}
                             <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'login' %}">Acceder</a></li>

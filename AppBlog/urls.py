@@ -18,11 +18,16 @@ urlpatterns = [
     path('EditarPostFormulario/<post_id>/', editarPostFormulario, name="editPost"), # fomulario para editar un post
     path('EditarBlogFormulario/<blog_id>/', editarBlogFormulario, name="editBlog"), # fomulario para editar un blog
     path('EditarCommentFormulario/<comment_id>/', editarCommentFormulario, name="editComment"), # fomulario para editar un Commentario
+    path('EliminarBlog/<blog_id>/', eliminarBlog, name="deleteBlog"), # Elimina el blog
+    path('EliminarPost/<post_id>/', eliminarPost, name="deletePost"), # Elimina el post
+    path('EliminarComment/<comment_id>/', eliminarComment, name="deleteComment"), # Elimina el comment
 
     path('buscarBlog/', buscarBlog, name="buscarBlog"), # fomulario para buscar blogs
     
     path('login/', login_request, name="login"),
     path('logout/', LogoutView.as_view(), name="logout"),
     path('register/', register, name="register"),
-        
+
+    path('editar_perfil/', editarPerfil, name="editar_perfil"),
+    path('agregar_avatar/', agregarAvatar, name="agregar_avatar"),    
 ]

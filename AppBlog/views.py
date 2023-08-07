@@ -1,3 +1,4 @@
+from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
 from .forms import *
 from datetime import datetime
@@ -359,6 +360,14 @@ def login_request(request):
             user = authenticate(username=usuario, password=clave)
             if user is not None:
                 login(request, user)
+
+                try:
+                    avatar = Avatar.objects.get(user=request.user.id).imagen.url
+                except:
+                    avatar = '/media/avatares/default.png'
+                finally:
+                    request.session['avatar'] = avatar
+
                 return index(request) # forware dentro de otra view
             else:
                 return render(request, "appblog/login.html", {"form":miForm, "mensaje": "Datos Inválidos"})
@@ -379,4 +388,67 @@ def register(request):
     else:
         form = RegistroUsuariosForm() # UserCreationForm 
 
-    return render(request, "appblog/registro.html", {"form": form})    
+    return render(request, "appblog/registro.html", {"form": form})
+
+@login_required
+def editarPerfil(request):
+    usuario = request.user
+    if request.method == "POST":
+        form = UserEditForm(request.POST)
+        if form.is_valid():
+            usuario.email = form.cleaned_data.get('email')
+            usuario.password1 = form.cleaned_data.get('password1')
+            usuario.password2 = form.cleaned_data.get('password2')
+            usuario.first_name = form.cleaned_data.get('first_name')
+            usuario.last_name = form.cleaned_data.get('last_name')
+            usuario.save()
+            return render(request, "appblog/index.html", {'mensaje': f"Usuario {usuario.username} actualizado correctamente"})
+        else:
+            return render(request, "appblog/editarPerfil.html", {'form': form})
+    else:
+        form = UserEditForm(instance=usuario)
+    return render(request, "appblog/editarPerfil.html", {'form': form, 'usuario':usuario.username})
+
+@login_required
+def agregarAvatar(request):
+    if request.method == "POST":
+        form = AvatarFormulario(request.POST, request.FILES)
+        if form.is_valid():
+            u = User.objects.get(username=request.user)
+            #_________________ Esto es para borrar el avatar anterior
+            avatarViejo = Avatar.objects.filter(user=u)
+            if len(avatarViejo) > 0: # Si esto es verdad quiere decir que hay un Avatar previo
+                avatarViejo[0].delete()
+
+            #_________________ Grabo avatar nuevo
+            avatar = Avatar(user=u, imagen=form.cleaned_data['imagen'])
+            avatar.save()
+
+            #_________________ Almacenar en session la url del avatar para mostrarla en base
+            imagen = Avatar.objects.get(user=request.user.id).imagen.url
+            request.session['avatar'] = imagen
+
+            return render(request, "appblog/index.html")
+    else:
+        form = AvatarFormulario()
+    return render(request, "appblog/agregarAvatar.html", {'form': form})
+
+@login_required
+def eliminarComment(request, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    post_id = comment.post.id
+    comment.delete()
+    return  redirect(reverse_lazy('post', args=[post_id]))
+
+@login_required
+def eliminarPost(request, post_id):
+    post = Post.objects.get(id=post_id)
+    blog_id = post.blog.id
+    post.delete() 
+    return redirect(reverse_lazy('blog', args=[blog_id]))
+@login_required
+
+def eliminarBlog(request, blog_id):
+    blog = Blog.objects.get(id=blog_id)
+    blog.delete()
+    return redirect(reverse_lazy('index'))

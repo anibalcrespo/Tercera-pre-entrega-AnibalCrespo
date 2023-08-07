@@ -1,0 +1,49 @@
+{% extends 'appblog/base.html' %}
+{% load static %}
+
+        {% block header %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('{% static 'appblog/assets/img/home-bg.jpg' %}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="blog-heading">
+                            <h1>Editar Perfil</h1>
+                            <h2 class="subheading"></h2>
+                            <span class="meta">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        {% endblock header %}
+
+        {% block content %}
+
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <br>
+                    <div class="text-center">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4 text-center" href="{% url 'agregar_avatar' %}">
+                            <div class="text-center" style="background-image: url('{{ request.session.avatar }}');
+                            background-repeat: no-repeat;
+                            background-size: cover;
+                            height: 150px;
+                            width: 150px;
+                            border-radius: 120px;"></div>
+                            Cambiar Avatar
+                        </a>
+                    </div> 
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {{ form.as_div }}
+                        <br>
+                        <button class="btn btn-primary" type="submit">Actualizar Usuario</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endblock content %}

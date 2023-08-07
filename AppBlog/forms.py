@@ -152,4 +152,30 @@ class LoginUsuariosForm(AuthenticationForm):
         for key, field in self.fields.items():
             field.label = ""
 
+class UserEditForm(UserCreationForm):
+    email = forms.EmailField(label="Modificar E-mail",  widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Email"}))
+    password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Contraseña"}))
+    password2 = forms.CharField(label='Repetir la contraseña', widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Repetir Contraseña"})) 
+    first_name = forms.CharField(label="Nombre/s", max_length=50, required=False,  widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Nombre"}))
+    last_name = forms.CharField(label="Apellido/s", max_length=50, required=False,  widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Apellido"}))
+
+    class Meta:
+        model = User
+        fields = [ 'email', 'password1', 'password2', 'first_name', 'last_name' ] 
+        #Saca los mensajes de ayuda
+        help_texts = { k:"" for k in fields}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for key, field in self.fields.items():
+            field.label = ""
+
+class AvatarFormulario(forms.Form):
+    imagen = forms.ImageField(required=True,
+        widget=forms.FileInput(attrs={"class": "form-control", "placeholder": "Seleccionar imagen"}))        
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for key, field in self.fields.items():
+            field.label = ""
         
